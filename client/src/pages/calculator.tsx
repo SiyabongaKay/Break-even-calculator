@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Download, Share2 } from "lucide-react";
@@ -76,6 +76,42 @@ export default function Calculator() {
     setEnhancements(scenario.enhancements || enhancements);
   };
 
+  // Intersection Observer for scroll animations with performance optimization
+  useEffect(() => {
+    // Debounce function to prevent animation conflicts
+    let timeoutId: NodeJS.Timeout;
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !entry.target.classList.contains('visible')) {
+              entry.target.classList.add('visible');
+              // Stop observing once animated to prevent re-triggering
+              observer.unobserve(entry.target);
+            }
+          });
+        }, 50); // 50ms debounce
+      },
+      {
+        threshold: 0.15,
+        rootMargin: '20px 0px -20px 0px'
+      }
+    );
+
+    // Use requestAnimationFrame for better performance
+    requestAnimationFrame(() => {
+      const elements = document.querySelectorAll('.fade-in-on-scroll');
+      elements.forEach((el) => observer.observe(el));
+    });
+
+    return () => {
+      clearTimeout(timeoutId);
+      observer.disconnect();
+    };
+  }, []);
+
   const handleExportPDF = () => {
     // Create a summary of the current scenario for PDF export
     const summary = {
@@ -140,24 +176,24 @@ export default function Calculator() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Input Section */}
-          <div className="lg:col-span-2 space-y-8 animate-fadeInUp">
+          <div className="lg:col-span-2 space-y-8">
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-              <div className="animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
+              <div className="fade-in-on-scroll">
                 <CostTable costItems={costItems} setCostItems={setCostItems} />
               </div>
-              <div className="animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
+              <div className="fade-in-on-scroll">
                 <VariableCostTable variableCostItems={variableCostItems} setVariableCostItems={setVariableCostItems} />
               </div>
             </div>
-            <div className="animate-fadeInUp" style={{ animationDelay: '0.3s' }}>
+            <div className="fade-in-on-scroll">
               <FinancialParameters params={updatedFinancialParams} setParams={setFinancialParams} />
             </div>
           </div>
 
           {/* Sidebar with Key Metrics */}
-          <div className="lg:col-span-1 space-y-6 animate-fadeInUp" style={{ animationDelay: '0.4s' }}>
+          <div className="lg:col-span-1 space-y-6">
             {/* Quick Metrics */}
-            <Card className="bg-white/60 backdrop-blur-sm shadow-xl border-0 sticky top-8">
+            <Card className="bg-white/60 backdrop-blur-sm shadow-xl border-0 sticky top-8 fade-in-on-scroll">
               <CardHeader className="pb-4">
                 <CardTitle className="text-xl font-semibold bg-gradient-to-r from-slate-700 to-slate-900 bg-clip-text text-transparent">
                   Key Metrics
@@ -165,7 +201,7 @@ export default function Calculator() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <div className="bg-gradient-to-r from-secondary/10 to-emerald-500/10 rounded-xl p-4 border border-secondary/20 hover:shadow-md transition-all duration-300 animate-pulse-gentle">
+                  <div className="bg-gradient-to-r from-secondary/10 to-emerald-500/10 rounded-xl p-4 border border-secondary/20 hover:shadow-md transition-all duration-300">
                     <div className="text-sm text-slate-600 mb-1">Contribution Margin</div>
                     <div className="text-2xl font-bold text-secondary">R {metrics.contributionMargin.toLocaleString()}</div>
                   </div>
@@ -186,12 +222,12 @@ export default function Calculator() {
             </Card>
 
             {/* Enhancements Panel */}
-            <div className="animate-fadeInUp" style={{ animationDelay: '0.6s' }}>
+            <div className="fade-in-on-scroll">
               <EnhancementsPanel settings={enhancements} setSettings={setEnhancements} />
             </div>
 
             {/* Scenario Management */}
-            <div className="animate-fadeInUp" style={{ animationDelay: '0.7s' }}>
+            <div className="fade-in-on-scroll">
               <ScenarioManagement 
                 currentScenario={currentScenario} 
                 onLoadScenario={handleLoadScenario} 
@@ -200,7 +236,7 @@ export default function Calculator() {
           </div>
 
           {/* Charts Section - Full Width */}
-          <div className="lg:col-span-3 animate-fadeInUp" style={{ animationDelay: '0.5s' }}>
+          <div className="lg:col-span-3 fade-in-on-scroll">
             <ChartsSection 
               projection={projection} 
               fixedCosts={totalFixedCosts}
