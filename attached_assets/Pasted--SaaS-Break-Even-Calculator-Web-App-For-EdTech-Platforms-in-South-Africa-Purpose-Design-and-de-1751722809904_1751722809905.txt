@@ -1,0 +1,113 @@
+🌍 SaaS Break-Even Calculator Web App
+For EdTech Platforms in South Africa
+
+🎯 Purpose
+Design and develop an interactive SaaS Break-Even Calculator tailored for ed-tech startups and scale-ups operating in South Africa. The tool will help product managers, founders, and financial planners forecast monthly recurring revenue (MRR) and calculate when their platform reaches break-even, based on customizable assumptions.
+
+This application will serve internal strategy sessions and investor presentations by validating pricing models, scaling assumptions, and customer acquisition expectations.
+
+✅ Core Features
+1. 🔢 User Input Interface
+Design an intuitive and clean input form that captures the following fields:
+
+Input Field	Description
+Fixed Monthly Costs (ZAR)	E.g., salaries, servers, support, marketing
+Price per Learner	Monthly subscription fee per active learner
+Variable Cost per Learner	Costs like cloud hosting, support, SMS, content delivery
+Initial Learner Count	Number of paying learners in month 1
+Monthly Growth Rate (%)	Expected learner acquisition rate month-over-month
+Monthly Churn Rate (%)	Learners dropping off platform per month
+
+🎛 Optional: Use sliders for growth/churn, currency input fields for pricing/costs
+
+2. 📈 Calculation Logic
+The backend logic should calculate:
+
+📌 Contribution Margin:
+sql
+Copy
+Edit
+Contribution Margin = Price per Learner - Variable Cost per Learner
+📌 Break-even Learner Count:
+mathematica
+Copy
+Edit
+Break-even Learners = Fixed Monthly Costs ÷ Contribution Margin
+Break-even MRR = Break-even Learners × Price per Learner
+📌 Contribution Margin Ratio:
+java
+Copy
+Edit
+CM Ratio = (Contribution Margin ÷ Price per Learner) × 100
+Break-even Sales (ZAR) = Fixed Costs ÷ (CM Ratio ÷ 100)
+3. 📅 12-Month Forecast Simulation
+Simulate user growth and churn over 12 months:
+
+python
+Copy
+Edit
+For month in range(1, 13):
+    learners = previous_learners + (growth_rate × previous_learners) - (churn_rate × previous_learners)
+    mrr = learners × price_per_learner
+Store each month’s:
+
+Active Learner Count
+
+MRR
+
+4. 📊 Output & Visualization
+Display the following:
+
+📈 Line Chart of MRR over 12 months (use Recharts or Chart.js)
+
+📍 Break-even point overlay on the chart:
+
+Break-even month (first month where MRR ≥ fixed costs)
+
+Break-even learner count
+
+Break-even revenue threshold (MRR)
+
+🧮 Display calculated values below chart:
+-Total MRR at month 12
+-Final active learners
+-Contribution Margin & Ratio
+-Break-even learners and MRR
+
+Enhancements
+Enable users to model more complex realities with toggles and switches:
+Add-On Revenue Model
+Toggle: "Enable Add-ons?"
+Input: Add-on price per learner (e.g., R499 for Parent Portal)
+Add-on penetration rate (e.g., 10% of learners purchase it)
+
+Freemium Conversion Modeling
+Initial free user base
+
+Conversion rate per month to paid plan
+
+Sensitivity Analysis Panel
+Churn simulation (+/- 5%, 10%, 15%)
+
+Growth rate simulation
+
+Scenario Management
+Authentication & Storage
+
+Save/load user scenarios
+
+"Download Forecast as PDF"
+
+"Share Scenario Link"
+
+Tech Stack
+Layer	Tech Options
+Frontend -React.js with Tailwind CSS
+Backend	 -Node.js
+Charts	 -Recharts or Chart.js
+
+📌 Deliverables
+-Fully responsive web app
+-Clean UI with toggleable options
+-Chart overlays for break-even points
+-Calculation summary card
