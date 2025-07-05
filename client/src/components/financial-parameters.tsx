@@ -17,9 +17,11 @@ export function FinancialParameters({ params, setParams }: FinancialParametersPr
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Financial Parameters</CardTitle>
+    <Card className="bg-white/70 backdrop-blur-sm shadow-xl border-0 hover:bg-white/80 transition-all duration-300">
+      <CardHeader className="pb-4">
+        <CardTitle className="text-xl font-semibold bg-gradient-to-r from-slate-700 to-slate-900 bg-clip-text text-transparent">
+          Financial Parameters
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

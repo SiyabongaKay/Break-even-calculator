@@ -29,12 +29,14 @@ export function ChartsSection({ projection, fixedCosts, metrics }: ChartsSection
   const netGrowthRate = metrics.monthlyGrowthRate - metrics.monthlyChurnRate;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* MRR Forecast Chart */}
-      <Card>
-        <CardHeader>
+      <Card className="bg-white/70 backdrop-blur-sm shadow-xl border-0 hover:bg-white/80 transition-all duration-300">
+        <CardHeader className="pb-4">
           <div className="flex items-center justify-between">
-            <CardTitle>12-Month MRR Forecast</CardTitle>
+            <CardTitle className="text-2xl font-semibold bg-gradient-to-r from-slate-700 to-slate-900 bg-clip-text text-transparent">
+              12-Month MRR Forecast
+            </CardTitle>
             <div className="flex items-center space-x-4 text-sm">
               <div className="flex items-center">
                 <div className="w-3 h-3 bg-primary rounded-full mr-2"></div>
@@ -93,9 +95,11 @@ export function ChartsSection({ projection, fixedCosts, metrics }: ChartsSection
       </Card>
 
       {/* Learner Growth Chart */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Active Learner Growth</CardTitle>
+      <Card className="bg-white/70 backdrop-blur-sm shadow-xl border-0 hover:bg-white/80 transition-all duration-300">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-2xl font-semibold bg-gradient-to-r from-slate-700 to-slate-900 bg-clip-text text-transparent">
+            Active Learner Growth
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="h-60">
@@ -113,9 +117,11 @@ export function ChartsSection({ projection, fixedCosts, metrics }: ChartsSection
       </Card>
 
       {/* Year-End Summary */}
-      <Card>
-        <CardHeader>
-          <CardTitle>12-Month Summary</CardTitle>
+      <Card className="bg-white/70 backdrop-blur-sm shadow-xl border-0 hover:bg-white/80 transition-all duration-300">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-2xl font-semibold bg-gradient-to-r from-slate-700 to-slate-900 bg-clip-text text-transparent">
+            12-Month Summary
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
