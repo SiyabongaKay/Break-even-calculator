@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Download, Share2 } from "lucide-react";
 import { CostTable } from "@/components/cost-table";
+import { VariableCostTable } from "@/components/variable-cost-table";
 import { FinancialParameters } from "@/components/financial-parameters";
 import { ChartsSection } from "@/components/charts-section";
 import { calculateMetrics, calculateProjection, type CostItem, type FinancialParams } from "@/lib/calculations";
@@ -14,6 +15,13 @@ export default function Calculator() {
     { id: "3", description: "Marketing & Sales", amount: 12000 },
   ]);
 
+  const [variableCostItems, setVariableCostItems] = useState<CostItem[]>([
+    { id: "1", description: "Cloud hosting per learner", amount: 15 },
+    { id: "2", description: "Customer support", amount: 12 },
+    { id: "3", description: "SMS notifications", amount: 8 },
+    { id: "4", description: "Content delivery", amount: 10 },
+  ]);
+
   const [financialParams, setFinancialParams] = useState<FinancialParams>({
     pricePerLearner: 299,
     variableCostPerLearner: 45,
@@ -23,8 +31,16 @@ export default function Calculator() {
   });
 
   const totalFixedCosts = costItems.reduce((sum, item) => sum + item.amount, 0);
-  const metrics = calculateMetrics(totalFixedCosts, financialParams);
-  const projection = calculateProjection(financialParams);
+  const totalVariableCosts = variableCostItems.reduce((sum, item) => sum + item.amount, 0);
+  
+  // Update financial params when variable costs change
+  const updatedFinancialParams = {
+    ...financialParams,
+    variableCostPerLearner: totalVariableCosts
+  };
+  
+  const metrics = calculateMetrics(totalFixedCosts, updatedFinancialParams);
+  const projection = calculateProjection(updatedFinancialParams);
 
   const handleExportPDF = () => {
     // Implementation for PDF export would go here
@@ -65,7 +81,8 @@ export default function Calculator() {
           {/* Input Section */}
           <div className="space-y-6">
             <CostTable costItems={costItems} setCostItems={setCostItems} />
-            <FinancialParameters params={financialParams} setParams={setFinancialParams} />
+            <VariableCostTable variableCostItems={variableCostItems} setVariableCostItems={setVariableCostItems} />
+            <FinancialParameters params={updatedFinancialParams} setParams={setFinancialParams} />
 
             {/* Quick Metrics */}
             <Card>

@@ -49,24 +49,20 @@ export function FinancialParameters({ params, setParams }: FinancialParametersPr
           <div>
             <div className="flex items-center gap-2 mb-2">
               <Label htmlFor="variableCost" className="text-sm font-medium text-slate-700">
-                Variable Cost per Learner (ZAR/month)
+                Total Variable Cost per Learner (ZAR/month)
               </Label>
               <Tooltip>
                 <TooltipTrigger>
                   <Info className="w-4 h-4 text-slate-400" />
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Costs like hosting, support, SMS per learner</p>
+                  <p>Calculated from variable cost table above</p>
                 </TooltipContent>
               </Tooltip>
             </div>
-            <Input
-              id="variableCost"
-              type="number"
-              value={params.variableCostPerLearner}
-              onChange={(e) => updateParam("variableCostPerLearner", parseFloat(e.target.value) || 0)}
-              className="focus:ring-2 focus:ring-primary focus:border-transparent"
-            />
+            <div className="bg-slate-50 border border-slate-200 rounded-md px-3 py-2 text-slate-700 font-medium">
+              R {params.variableCostPerLearner.toFixed(2)}
+            </div>
           </div>
           
           <div>
