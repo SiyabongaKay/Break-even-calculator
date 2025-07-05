@@ -30,91 +30,94 @@ export function ChartsSection({ projection, fixedCosts, metrics }: ChartsSection
 
   return (
     <div className="space-y-8">
-      {/* MRR Forecast Chart */}
-      <Card className="bg-white/70 backdrop-blur-sm shadow-xl border-0 hover:bg-white/80 transition-all duration-300">
-        <CardHeader className="pb-4">
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-2xl font-semibold bg-gradient-to-r from-slate-700 to-slate-900 bg-clip-text text-transparent">
-              12-Month MRR Forecast
-            </CardTitle>
-            <div className="flex items-center space-x-4 text-sm">
-              <div className="flex items-center">
-                <div className="w-3 h-3 bg-primary rounded-full mr-2"></div>
-                <span className="text-slate-600">MRR</span>
-              </div>
-              <div className="flex items-center">
-                <div className="w-3 h-3 bg-destructive rounded-full mr-2"></div>
-                <span className="text-slate-600">Break-even Line</span>
+      {/* Charts Side by Side */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* MRR Forecast Chart */}
+        <Card className="bg-white/70 backdrop-blur-sm shadow-xl border-0 hover:bg-white/80 transition-all duration-300">
+          <CardHeader className="pb-4">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-xl font-semibold bg-gradient-to-r from-slate-700 to-slate-900 bg-clip-text text-transparent">
+                12-Month MRR Forecast
+              </CardTitle>
+              <div className="flex items-center space-x-3 text-xs">
+                <div className="flex items-center">
+                  <div className="w-2 h-2 bg-primary rounded-full mr-1"></div>
+                  <span className="text-slate-600">MRR</span>
+                </div>
+                <div className="flex items-center">
+                  <div className="w-2 h-2 bg-destructive rounded-full mr-1"></div>
+                  <span className="text-slate-600">Break-even</span>
+                </div>
               </div>
             </div>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={chartData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis tickFormatter={formatCurrency} />
-                <Tooltip formatter={(value: number) => [formatCurrency(value)]} />
-                <ReferenceLine y={fixedCosts} stroke="#dc2626" strokeDasharray="5 5" />
-                <Line 
-                  type="monotone" 
-                  dataKey="mrr" 
-                  stroke="hsl(207, 90%, 54%)" 
-                  strokeWidth={3}
-                  dot={{ fill: "hsl(207, 90%, 54%)", strokeWidth: 2 }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-          
-          {/* Break-even Indicator */}
-          <div className="mt-4">
-            {breakEvenMonth > 0 && breakEvenMonth <= 12 ? (
-              <div className="p-4 bg-secondary/10 border-l-4 border-secondary rounded-r-lg">
-                <div className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-secondary mr-2" />
-                  <span className="font-semibold text-secondary">Break-even reached in Month {breakEvenMonth}</span>
+          </CardHeader>
+          <CardContent>
+            <div className="h-72">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={chartData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="monthShort" fontSize={12} />
+                  <YAxis tickFormatter={formatCurrency} fontSize={12} />
+                  <Tooltip formatter={(value: number) => [formatCurrency(value)]} />
+                  <ReferenceLine y={fixedCosts} stroke="#dc2626" strokeDasharray="5 5" />
+                  <Line 
+                    type="monotone" 
+                    dataKey="mrr" 
+                    stroke="hsl(207, 90%, 54%)" 
+                    strokeWidth={3}
+                    dot={{ fill: "hsl(207, 90%, 54%)", strokeWidth: 2 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            
+            {/* Break-even Indicator */}
+            <div className="mt-4">
+              {breakEvenMonth > 0 && breakEvenMonth <= 12 ? (
+                <div className="p-3 bg-secondary/10 border-l-4 border-secondary rounded-r-lg">
+                  <div className="flex items-center">
+                    <CheckCircle className="w-4 h-4 text-secondary mr-2" />
+                    <span className="font-semibold text-secondary text-sm">Break-even in Month {breakEvenMonth}</span>
+                  </div>
+                  <div className="text-xs text-slate-600 mt-1">
+                    MRR: <span className="font-semibold">R {projection[breakEvenMonth - 1].mrr.toLocaleString()}</span> | 
+                    Learners: <span className="font-semibold">{projection[breakEvenMonth - 1].learners.toLocaleString()}</span>
+                  </div>
                 </div>
-                <div className="text-sm text-slate-600 mt-1">
-                  MRR: <span className="font-semibold">R {projection[breakEvenMonth - 1].mrr.toLocaleString()}</span> | 
-                  Learners: <span className="font-semibold">{projection[breakEvenMonth - 1].learners.toLocaleString()}</span>
+              ) : (
+                <div className="p-3 bg-amber-50 border-l-4 border-amber-500 rounded-r-lg">
+                  <div className="flex items-center">
+                    <AlertTriangle className="w-4 h-4 text-amber-500 mr-2" />
+                    <span className="font-semibold text-amber-600 text-sm">Break-even not reached in 12 months</span>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div className="p-4 bg-amber-50 border-l-4 border-amber-500 rounded-r-lg">
-                <div className="flex items-center">
-                  <AlertTriangle className="w-5 h-5 text-amber-500 mr-2" />
-                  <span className="font-semibold text-amber-600">Break-even not reached within 12 months</span>
-                </div>
-              </div>
-            )}
-          </div>
-        </CardContent>
-      </Card>
+              )}
+            </div>
+          </CardContent>
+        </Card>
 
-      {/* Learner Growth Chart */}
-      <Card className="bg-white/70 backdrop-blur-sm shadow-xl border-0 hover:bg-white/80 transition-all duration-300">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-2xl font-semibold bg-gradient-to-r from-slate-700 to-slate-900 bg-clip-text text-transparent">
-            Active Learner Growth
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="h-60">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="monthShort" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="learners" fill="hsl(159, 64%, 43%)" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </CardContent>
-      </Card>
+        {/* Learner Growth Chart */}
+        <Card className="bg-white/70 backdrop-blur-sm shadow-xl border-0 hover:bg-white/80 transition-all duration-300">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-xl font-semibold bg-gradient-to-r from-slate-700 to-slate-900 bg-clip-text text-transparent">
+              Active Learner Growth
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="h-72">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={chartData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="monthShort" fontSize={12} />
+                  <YAxis fontSize={12} />
+                  <Tooltip />
+                  <Bar dataKey="learners" fill="hsl(159, 64%, 43%)" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
       {/* Year-End Summary */}
       <Card className="bg-white/70 backdrop-blur-sm shadow-xl border-0 hover:bg-white/80 transition-all duration-300">

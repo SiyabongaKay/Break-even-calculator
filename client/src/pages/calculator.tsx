@@ -6,6 +6,8 @@ import { CostTable } from "@/components/cost-table";
 import { VariableCostTable } from "@/components/variable-cost-table";
 import { FinancialParameters } from "@/components/financial-parameters";
 import { ChartsSection } from "@/components/charts-section";
+import { EnhancementsPanel } from "@/components/enhancements-panel";
+import { ScenarioManagement } from "@/components/scenario-management";
 import { calculateMetrics, calculateProjection, type CostItem, type FinancialParams } from "@/lib/calculations";
 
 export default function Calculator() {
@@ -30,6 +32,23 @@ export default function Calculator() {
     monthlyChurnRate: 5.2,
   });
 
+  const [enhancements, setEnhancements] = useState({
+    addOnRevenue: {
+      enabled: false,
+      price: 499,
+      penetrationRate: 10,
+    },
+    freemiumModel: {
+      enabled: false,
+      freeUserBase: 1000,
+      conversionRate: 2.5,
+    },
+    sensitivityAnalysis: {
+      churnVariation: 5,
+      growthVariation: 10,
+    },
+  });
+
   const totalFixedCosts = costItems.reduce((sum, item) => sum + item.amount, 0);
   const totalVariableCosts = variableCostItems.reduce((sum, item) => sum + item.amount, 0);
   
@@ -42,14 +61,54 @@ export default function Calculator() {
   const metrics = calculateMetrics(totalFixedCosts, updatedFinancialParams);
   const projection = calculateProjection(updatedFinancialParams);
 
+  const currentScenario = {
+    name: "Current Scenario",
+    costItems,
+    variableCostItems,
+    financialParams: updatedFinancialParams,
+    enhancements
+  };
+
+  const handleLoadScenario = (scenario: any) => {
+    setCostItems(scenario.costItems || costItems);
+    setVariableCostItems(scenario.variableCostItems || variableCostItems);
+    setFinancialParams(scenario.financialParams || financialParams);
+    setEnhancements(scenario.enhancements || enhancements);
+  };
+
   const handleExportPDF = () => {
-    // Implementation for PDF export would go here
-    console.log("Exporting to PDF...");
+    // Create a summary of the current scenario for PDF export
+    const summary = {
+      scenarioName: currentScenario.name,
+      date: new Date().toLocaleDateString(),
+      fixedCosts: totalFixedCosts,
+      variableCostPerLearner: totalVariableCosts,
+      pricePerLearner: updatedFinancialParams.pricePerLearner,
+      breakEvenLearners: metrics.breakEvenLearners,
+      breakEvenMRR: metrics.breakEvenMRR,
+      contributionMargin: metrics.contributionMargin,
+      cmRatio: metrics.cmRatio,
+      projectionData: projection
+    };
+    
+    // In a real implementation, this would generate and download a PDF
+    console.log("PDF Export Data:", summary);
+    alert("PDF export feature would download a comprehensive report with all calculations and charts.");
   };
 
   const handleShare = () => {
-    // Implementation for sharing would go here
-    console.log("Sharing scenario...");
+    const shareData = {
+      title: "SaaS Break-Even Calculator - " + currentScenario.name,
+      text: `Break-even analysis showing ${metrics.breakEvenLearners} learners needed for R${metrics.breakEvenMRR.toLocaleString()} MRR`,
+      url: window.location.href
+    };
+    
+    if (navigator.share) {
+      navigator.share(shareData);
+    } else {
+      navigator.clipboard.writeText(`${shareData.title}\n${shareData.text}\n${shareData.url}`);
+      alert("Scenario details copied to clipboard!");
+    }
   };
 
   return (
@@ -125,6 +184,19 @@ export default function Calculator() {
                 </div>
               </CardContent>
             </Card>
+
+            {/* Enhancements Panel */}
+            <div className="animate-fadeInUp" style={{ animationDelay: '0.6s' }}>
+              <EnhancementsPanel settings={enhancements} setSettings={setEnhancements} />
+            </div>
+
+            {/* Scenario Management */}
+            <div className="animate-fadeInUp" style={{ animationDelay: '0.7s' }}>
+              <ScenarioManagement 
+                currentScenario={currentScenario} 
+                onLoadScenario={handleLoadScenario} 
+              />
+            </div>
           </div>
 
           {/* Charts Section - Full Width */}
