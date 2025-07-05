@@ -17,9 +17,9 @@ export function FinancialParameters({ params, setParams }: FinancialParametersPr
   };
 
   return (
-    <Card>
+    <Card className="bg-white/70 backdrop-blur-sm shadow-xl border-0 hover:bg-white/80 transition-all duration-300">
       <CardHeader className="pb-4">
-        <CardTitle className="text-xl font-semibold">
+        <CardTitle className="text-xl font-semibold bg-gradient-to-r from-slate-700 to-slate-900 bg-clip-text text-transparent">
           Financial Parameters
         </CardTitle>
       </CardHeader>
@@ -62,7 +62,7 @@ export function FinancialParameters({ params, setParams }: FinancialParametersPr
                 </TooltipContent>
               </Tooltip>
             </div>
-            <div className="bg-muted border border-border rounded-md px-3 py-2 font-medium">
+            <div className="bg-slate-50 border border-slate-200 rounded-md px-3 py-2 text-slate-700 font-medium">
               R {params.variableCostPerLearner.toFixed(2)}
             </div>
           </div>

@@ -33,20 +33,20 @@ export function ChartsSection({ projection, fixedCosts, metrics }: ChartsSection
       {/* Charts Side by Side */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* MRR Forecast Chart */}
-        <Card>
+        <Card className="bg-white/70 backdrop-blur-sm shadow-xl border-0 hover:bg-white/80 transition-all duration-300">
           <CardHeader className="pb-4">
             <div className="flex items-center justify-between">
-              <CardTitle className="text-xl font-semibold">
+              <CardTitle className="text-xl font-semibold bg-gradient-to-r from-slate-700 to-slate-900 bg-clip-text text-transparent">
                 12-Month MRR Forecast
               </CardTitle>
               <div className="flex items-center space-x-3 text-xs">
                 <div className="flex items-center">
                   <div className="w-2 h-2 bg-primary rounded-full mr-1"></div>
-                  <span className="text-muted-foreground">MRR</span>
+                  <span className="text-slate-600">MRR</span>
                 </div>
                 <div className="flex items-center">
                   <div className="w-2 h-2 bg-destructive rounded-full mr-1"></div>
-                  <span className="text-muted-foreground">Break-even</span>
+                  <span className="text-slate-600">Break-even</span>
                 </div>
               </div>
             </div>
@@ -97,9 +97,9 @@ export function ChartsSection({ projection, fixedCosts, metrics }: ChartsSection
         </Card>
 
         {/* Learner Growth Chart */}
-        <Card>
+        <Card className="bg-white/70 backdrop-blur-sm shadow-xl border-0 hover:bg-white/80 transition-all duration-300">
           <CardHeader className="pb-4">
-            <CardTitle className="text-xl font-semibold">
+            <CardTitle className="text-xl font-semibold bg-gradient-to-r from-slate-700 to-slate-900 bg-clip-text text-transparent">
               Active Learner Growth
             </CardTitle>
           </CardHeader>
@@ -120,9 +120,9 @@ export function ChartsSection({ projection, fixedCosts, metrics }: ChartsSection
       </div>
 
       {/* Year-End Summary */}
-      <Card>
+      <Card className="bg-white/70 backdrop-blur-sm shadow-xl border-0 hover:bg-white/80 transition-all duration-300">
         <CardHeader className="pb-4">
-          <CardTitle className="text-2xl font-semibold">
+          <CardTitle className="text-2xl font-semibold bg-gradient-to-r from-slate-700 to-slate-900 bg-clip-text text-transparent">
             12-Month Summary
           </CardTitle>
         </CardHeader>

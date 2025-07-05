@@ -114,9 +114,9 @@ export function ScenarioManagement({ currentScenario, onLoadScenario }: Scenario
   };
 
   return (
-    <Card>
+    <Card className="bg-white/70 backdrop-blur-sm shadow-xl border-0 hover:bg-white/80 transition-all duration-300">
       <CardHeader className="pb-4">
-        <CardTitle className="text-xl font-semibold">
+        <CardTitle className="text-xl font-semibold bg-gradient-to-r from-slate-700 to-slate-900 bg-clip-text text-transparent">
           Scenario Management
         </CardTitle>
       </CardHeader>
@@ -184,8 +184,8 @@ export function ScenarioManagement({ currentScenario, onLoadScenario }: Scenario
             <Label className="text-sm font-medium text-slate-700">Saved Scenarios</Label>
             <div className="max-h-48 overflow-y-auto space-y-2">
               {savedScenarios.map((scenario) => (
-                <div key={scenario.id} className="flex items-center justify-between p-3 bg-muted rounded-lg">
-                  <span className="text-sm font-medium">{scenario.name}</span>
+                <div key={scenario.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                  <span className="text-sm font-medium text-slate-700">{scenario.name}</span>
                   <div className="flex space-x-1">
                     <Button
                       size="sm"
