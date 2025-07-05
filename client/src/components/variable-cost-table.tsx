@@ -36,23 +36,23 @@ export function VariableCostTable({ variableCostItems, setVariableCostItems }: V
   const totalVariableCosts = variableCostItems.reduce((sum, item) => sum + item.amount, 0);
 
   return (
-    <Card className="bg-white/70 backdrop-blur-sm shadow-xl border-0 hover:bg-white/80 transition-all duration-300">
+    <Card>
       <CardHeader className="pb-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-xl font-semibold bg-gradient-to-r from-slate-700 to-slate-900 bg-clip-text text-transparent">
+            <CardTitle className="text-xl font-semibold">
               Variable Costs per Learner
             </CardTitle>
             <Tooltip>
               <TooltipTrigger>
-                <Info className="w-4 h-4 text-slate-400" />
+                <Info className="w-4 h-4 text-muted-foreground" />
               </TooltipTrigger>
               <TooltipContent>
                 <p>Costs that scale with each learner (hosting, support, SMS, etc.)</p>
               </TooltipContent>
             </Tooltip>
           </div>
-          <Button onClick={addVariableCostItem} size="sm" className="bg-gradient-to-r from-secondary to-emerald-600 hover:from-secondary/90 hover:to-emerald-600/90 shadow-lg text-white">
+          <Button onClick={addVariableCostItem} size="sm" className="bg-gradient-to-r from-secondary to-emerald-600 hover:from-secondary/90 hover:to-emerald-600/90 text-white">
             <Plus className="w-4 h-4 mr-2" />
             Add Variable Cost
           </Button>
@@ -106,9 +106,9 @@ export function VariableCostTable({ variableCostItems, setVariableCostItems }: V
           </table>
         </div>
         
-        <div className="mt-6 pt-4 border-t border-slate-200/50">
-          <div className="flex justify-between items-center bg-gradient-to-r from-secondary/5 to-emerald-500/5 rounded-lg p-4 border border-secondary/20">
-            <span className="font-semibold text-slate-800">Total Variable Cost per Learner:</span>
+        <div className="mt-6 pt-4 border-t border-border">
+          <div className="flex justify-between items-center bg-secondary/10 dark:bg-secondary/20 rounded-lg p-4 border border-secondary/20">
+            <span className="font-semibold">Total Variable Cost per Learner:</span>
             <span className="font-bold text-2xl text-secondary">R {totalVariableCosts.toFixed(2)}</span>
           </div>
         </div>
