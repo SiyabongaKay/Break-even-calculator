@@ -1,0 +1,194 @@
+/* ========== Layout Containers ========== */
+.calculator-container {
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, #f8fafc, #eff6ff4d, #d1fae54d);
+}
+
+.main-content {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+}
+
+.grid-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+/* ========== Header Section ========== */
+.calculator-header {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+}
+
+.header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-title-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.app-title {
+    font-size: 2.25rem;
+    font-weight: bold;
+    background: linear-gradient(to right, #3b82f6, #10b981);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.app-subtitle {
+    font-size: 1.125rem;
+    margin-top: 0.5rem;
+    color: #475569;
+}
+
+.header-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.export-button {
+    background: linear-gradient(to right, #3b82f6, #2563eb);
+    color: white;
+}
+
+.share-button {
+    background: linear-gradient(to right, #10b981, #059669);
+    color: white;
+}
+
+.icon {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+}
+
+/* ========== Input Section ========== */
+.input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.input-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.cost-table-wrapper,
+.variable-cost-table-wrapper,
+.financial-params-wrapper {
+    animation: fadeInUp 0.5s ease both;
+}
+
+.cost-table-wrapper {
+    animation-delay: 0.1s;
+}
+
+.variable-cost-table-wrapper {
+    animation-delay: 0.2s;
+}
+
+.financial-params-wrapper {
+    animation-delay: 0.3s;
+}
+
+/* ========== Key Metrics Card ========== */
+.metrics-card {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(6px);
+    border: none;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 2rem;
+}
+
+.card-header {
+    padding-bottom: 1rem;
+}
+
+.metrics-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    background: linear-gradient(to right, #1e293b, #0f172a);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.metrics-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.metric {
+    background: linear-gradient(to right, #e0f2fe, #ecfdf5);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    transition: box-shadow 0.3s ease;
+}
+
+.metric:hover {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+}
+
+.metric-label {
+    font-size: 0.875rem;
+    color: #475569;
+    margin-bottom: 0.25rem;
+}
+
+.metric-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #059669;
+}
+
+.metric-highlight .metric-value {
+    color: #10b981;
+}
+
+/* ========== Charts Section ========== */
+.charts-section {
+    /* This will be overridden in media queries */
+}
+
+/* ========== Animations ========== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========== Responsive Design ========== */
+@media (min-width: 1024px) {
+    .grid-layout {
+        grid-template-columns: 2fr 1fr;
+    }
+
+    .charts-section {
+        grid-column: span 2;
+    }
+}
+
+@media (min-width: 1280px) {
+    .input-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

@@ -22,9 +22,7 @@ export function VariableCostTable({ variableCostItems, setVariableCostItems }: V
   };
 
   const removeVariableCostItem = (id: string) => {
-    if (variableCostItems.length > 1) {
       setVariableCostItems(variableCostItems.filter(item => item.id !== id));
-    }
   };
 
   const updateVariableCostItem = (id: string, field: keyof CostItem, value: string | number) => {
@@ -43,14 +41,6 @@ export function VariableCostTable({ variableCostItems, setVariableCostItems }: V
             <CardTitle className="text-xl font-semibold bg-gradient-to-r from-slate-700 to-slate-900 bg-clip-text text-transparent">
               Variable Costs per Learner
             </CardTitle>
-            <Tooltip>
-              <TooltipTrigger>
-                <Info className="w-4 h-4 text-slate-400" />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Costs that scale with each learner (hosting, support, SMS, etc.)</p>
-              </TooltipContent>
-            </Tooltip>
           </div>
           <Button onClick={addVariableCostItem} size="sm" className="bg-gradient-to-r from-secondary to-emerald-600 hover:from-secondary/90 hover:to-emerald-600/90 shadow-lg text-white">
             <Plus className="w-4 h-4 mr-2" />
@@ -95,7 +85,6 @@ export function VariableCostTable({ variableCostItems, setVariableCostItems }: V
                       variant="ghost"
                       size="sm"
                       className="text-destructive hover:text-destructive/80"
-                      disabled={variableCostItems.length <= 1}
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>
@@ -109,7 +98,7 @@ export function VariableCostTable({ variableCostItems, setVariableCostItems }: V
         <div className="mt-6 pt-4 border-t border-slate-200/50">
           <div className="flex justify-between items-center bg-gradient-to-r from-secondary/5 to-emerald-500/5 rounded-lg p-4 border border-secondary/20">
             <span className="font-semibold text-slate-800">Total Variable Cost per Learner:</span>
-            <span className="font-bold text-2xl text-secondary">R {totalVariableCosts.toFixed(2)}</span>
+            <span className="font-bold text-2xl text-primary">R {totalVariableCosts.toFixed(2)}</span>
           </div>
         </div>
       </CardContent>

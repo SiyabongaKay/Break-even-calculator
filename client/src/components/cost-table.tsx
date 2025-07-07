@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,9 +20,7 @@ export function CostTable({ costItems, setCostItems }: CostTableProps) {
   };
 
   const removeCostItem = (id: string) => {
-    if (costItems.length > 1) {
-      setCostItems(costItems.filter(item => item.id !== id));
-    }
+    setCostItems(costItems.filter(item => item.id !== id));
   };
 
   const updateCostItem = (id: string, field: keyof CostItem, value: string | number) => {
@@ -83,7 +80,6 @@ export function CostTable({ costItems, setCostItems }: CostTableProps) {
                       variant="ghost"
                       size="sm"
                       className="text-destructive hover:text-destructive/80"
-                      disabled={costItems.length <= 1}
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>

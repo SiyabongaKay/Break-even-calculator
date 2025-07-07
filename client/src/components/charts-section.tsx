@@ -9,9 +9,9 @@ interface ChartsSectionProps {
   metrics: Metrics;
 }
 
-export function ChartsSection({ projection, fixedCosts, metrics }: ChartsSectionProps) {
+export function ChartsSection({ projection, metrics }: ChartsSectionProps) {
   // Find break-even month
-  const breakEvenMonth = projection.findIndex(month => month.mrr >= fixedCosts) + 1;
+  const breakEvenMonth = projection.findIndex(month => month.mrr >= metrics.breakEvenMRR) + 1;
   
   // Format data for charts
   const chartData = projection.map((month, index) => ({
@@ -19,7 +19,7 @@ export function ChartsSection({ projection, fixedCosts, metrics }: ChartsSection
     monthShort: `M${index + 1}`,
     mrr: month.mrr,
     learners: month.learners,
-    breakEvenLine: fixedCosts,
+    breakEvenLine: metrics.breakEvenMRR,
   }));
 
   const formatCurrency = (value: number) => `R${value.toLocaleString()}`;
@@ -59,7 +59,7 @@ export function ChartsSection({ projection, fixedCosts, metrics }: ChartsSection
                   <XAxis dataKey="monthShort" fontSize={12} />
                   <YAxis tickFormatter={formatCurrency} fontSize={12} />
                   <Tooltip formatter={(value: number) => [formatCurrency(value)]} />
-                  <ReferenceLine y={fixedCosts} stroke="#dc2626" strokeDasharray="5 5" />
+                  <ReferenceLine y={metrics.breakEvenMRR} stroke="#dc2626" strokeDasharray="5 5" />
                   <Line 
                     type="monotone" 
                     dataKey="mrr" 
