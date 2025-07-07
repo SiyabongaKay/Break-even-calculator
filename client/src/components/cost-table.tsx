@@ -38,7 +38,7 @@ export function CostTable({costItems, setCostItems, costType}: CostTableProps) {
                 <div className="flex items-center justify-between">
                     <CardTitle
                         className="text-xl font-semibold bg-gradient-to-r from-slate-700 to-slate-900 bg-clip-text text-transparent">
-                        {costType === "Fixed" ? "Fixed Monthly" : "Variable"} Costs per Learner
+                        {costType === "Fixed" ? "Fixed Monthly" : "Variable"} Costs {costType === "Variable" ? "per learner":""}
                     </CardTitle>
                     <Button onClick={addCostItem} size="sm"
                             className="bg-gradient-to-r from-secondary to-emerald-600 hover:from-secondary/90 hover:to-emerald-600/90 shadow-lg text-white">
