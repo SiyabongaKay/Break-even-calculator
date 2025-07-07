@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CostTable } from "@/components/cost-table";
-import { VariableCostTable } from "@/components/variable-cost-table";
 import { FinancialParameters } from "@/components/financial-parameters";
 import { ChartsSection } from "@/components/charts-section";
 import { calculateMetrics, calculateProjection, type CostItem, type FinancialParams } from "@/lib/calculations";
@@ -45,10 +44,10 @@ export default function Calculator() {
             <div className="input-section">
               <div className="input-grid">
                 <div className="cost-table-wrapper">
-                  <CostTable costItems={costItems} setCostItems={setCostItems} />
+                  <CostTable costItems={costItems} setCostItems={setCostItems} costType="Fixed" />
                 </div>
                 <div className="variable-cost-table-wrapper">
-                  <VariableCostTable variableCostItems={variableCostItems} setVariableCostItems={setVariableCostItems} />
+                  <CostTable costItems={variableCostItems} setCostItems={setVariableCostItems} costType="Variable" />
                 </div>
               </div>
               <div className="financial-params-wrapper">
