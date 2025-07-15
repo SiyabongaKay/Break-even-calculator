@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CostTable } from "@/components/cost-table";
 import { FinancialParameters } from "@/components/financial-parameters";
@@ -6,10 +6,23 @@ import { ChartsSection } from "@/components/charts-section";
 import { calculateMetrics, calculateProjection, type CostItem, type FinancialParams } from "@/lib/calculations";
 import "./calculator.css";
 
+function useSessionStorage<T>(key: string, defaultValue: T): [T, React.Dispatch<React.SetStateAction<T>>] {
+  const [state, setState] = useState<T>(() => {
+    const stored = sessionStorage.getItem(key);
+    return stored ? JSON.parse(stored) : defaultValue;
+  });
+
+  useEffect(() => {
+    sessionStorage.setItem(key, JSON.stringify(state));
+  }, [key, state]);
+
+  return [state, setState];
+}
+
 export default function Calculator() {
-  const [costItems, setCostItems] = useState<CostItem[]>([]);
-  const [variableCostItems, setVariableCostItems] = useState<CostItem[]>([]);
-  const [financialParams, setFinancialParams] = useState<FinancialParams>({
+  const [costItems, setCostItems] = useSessionStorage<CostItem[]>("fixedCosts", []);
+  const [variableCostItems, setVariableCostItems] = useSessionStorage<CostItem[]>("variableCosts", []);
+  const [financialParams, setFinancialParams] = useSessionStorage<FinancialParams>("financialParams", {
     pricePerLearner: 0,
     variableCostPerLearner: 0,
     initialLearnerCount: 0,

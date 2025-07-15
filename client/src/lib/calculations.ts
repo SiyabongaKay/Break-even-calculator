@@ -29,9 +29,15 @@ export interface ProjectionMonth {
 
 export function calculateMetrics(fixedCosts: number, params: FinancialParams): Metrics {
   const contributionMargin = params.pricePerLearner - params.variableCostPerLearner;
-  const cmRatio = contributionMargin / params.pricePerLearner * 100;
-  const breakEvenLearners = Math.ceil(fixedCosts / contributionMargin);
-  const breakEvenMRR = breakEvenLearners * params.pricePerLearner;
+  const cmRatio = params.pricePerLearner
+      ? (contributionMargin / params.pricePerLearner) * 100
+      : 0;
+  const breakEvenLearners = contributionMargin > 0
+      ? Math.ceil(fixedCosts / contributionMargin)
+      : 0;
+
+  const breakEvenMRR = breakEvenLearners * (params.pricePerLearner || 0);
+
 
   return {
     contributionMargin,

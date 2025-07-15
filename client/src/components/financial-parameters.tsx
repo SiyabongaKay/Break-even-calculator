@@ -88,7 +88,7 @@ export function FinancialParameters({ params, setParams }: FinancialParametersPr
             <Slider
               value={[params.monthlyGrowthRate]}
               onValueChange={(value) => updateParam("monthlyGrowthRate", value[0])}
-              max={50}
+              max={100}
               min={0}
               step={0.5}
               className="w-full"
